@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Counter</title>
+
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script src="https://unpkg.com/moment@2.29.1/moment.js"></script>
+    <link href="https://unpkg.com/antd@4.19.3/dist/antd.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/antd@4.19.3/dist/antd.min.js"></script>
+
+    <link rel="shortcut icon" href="favicon.png">
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        class Counter extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = {
+                    value: 0,
+                };
+            }
+
+            async add() {
+                await counterAdd(1);
+                await this.updateValue();
+            }
+
+            async sub() {
+                await counterAdd(-1);
+                await this.updateValue();
+            }
+
+            async updateValue() {
+                await window.counterValue();
+                this.setState({
+                    value: await window.counterValue()
+                })
+            }
+
+            render() {
+                return (
+                    <antd.Layout>
+                        <antd.Layout.Header></antd.Layout.Header>
+                        <antd.Layout.Content align="center">
+                            <antd.Statistic value={this.state.value} />
+                        </antd.Layout.Content>
+                        <antd.Layout.Content align="center">
+                            <antd.Space align="center">
+                                <antd.Button type="primary" size="large" onClick={this.add.bind(this)}> +1 </antd.Button>
+                                <antd.Button type="primary" size="large" onClick={this.sub.bind(this)}> -1 </antd.Button>
+                            </antd.Space>
+                        </antd.Layout.Content>
+                        <antd.Layout.Footer></antd.Layout.Footer>
+                    </antd.Layout>
+                )
+            }
+        }
+
+        ReactDOM.render(
+            <Counter />,
+            document.getElementById('root')
+        );
+    </script>
+</body>
+
+</html>
