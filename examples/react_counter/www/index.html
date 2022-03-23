@@ -40,7 +40,6 @@
             }
 
             async updateValue() {
-                await window.counterValue();
                 this.setState({
                     value: await window.counterValue()
                 })
